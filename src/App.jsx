@@ -9,6 +9,7 @@ import Collections from './pages/Collections';
 import AIGuide from './pages/AIGuide';
 import PlaceDetail from './pages/Place/[placeId]';
 import About from './pages/About';
+import Stories from './pages/Stories';
 import { AnimatePresence } from 'framer-motion';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path="/spiritual" element={<Spiritual />} />
               <Route path="/collections" element={<Collections />} />
               <Route path="/ai-guide" element={<AIGuide />} />
+              <Route path="/stories" element={<Stories />} />
               <Route path="/about" element={<About />} />
               <Route path="/place/:placeId" element={<PlaceDetail />} />
             </Routes>

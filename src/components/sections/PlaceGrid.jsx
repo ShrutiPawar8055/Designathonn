@@ -25,7 +25,7 @@ const PlaceCard = ({ place, index }) => (
         <span className="ui-label text-[8px]">{place.state}</span>
       </div>
       <h3 className="heading-h3 text-white text-2xl mb-2">{place.name}</h3>
-      <p className="body-text text-white/60 text-xs mb-6">{place.desc}</p>
+      <p className="body-text text-white/60 text-xs mb-6">{place.shortDesc}</p>
       
       <Link 
         to={`/place/${place.id}`}

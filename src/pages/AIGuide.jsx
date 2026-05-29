@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PageWrapper from '../components/layout/PageWrapper';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mic, Send, Sparkles, Volume2, User, Bot, History, Settings, Info, ArrowLeft, MoreVertical, Globe } from 'lucide-react';
+import { Mic, Send, Sparkles, Volume2, User, Bot, History, Settings, Info, ArrowLeft, MoreVertical, Globe, Play, Pause, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const AIGuide = () => {
@@ -17,34 +17,100 @@ const AIGuide = () => {
   const [inputValue, setInputValue] = useState('');
   const { language } = useLanguage();
 
-  const getNarrativeResponse = (userQuery) => {
-    const responses = [
-      "Ah, what a wonderful question! Picture this: centuries ago, under that very sky, poets sang of this land, and kings built dreams in stone. Let me tell you the story as it was whispered through generations...",
-      "Let me paint this for you. The sun is setting over the horizon, casting golden light on ancient walls. Close your eyes and listen—history is speaking to us...",
-      "Imagine walking through those gates hundreds of years ago. The air is filled with the scent of incense, the sound of bells, and the murmur of pilgrims. Let me walk you through that moment...",
-      "This is where legends were born. Let me tell you the tale as the storytellers of old would have shared it—with passion, with reverence, and with all the color of life...",
-      "Listen carefully. The stones here remember everything. Let me share their memories with you, woven into a narrative that will make you feel like you were there..."
-    ];
-    
-    const randomIndex = Math.floor(Math.random() * responses.length);
-    return responses[randomIndex];
+  const [isLoading, setIsLoading] = useState(false);
+  const audioRef = useRef(null);
+  const [currentlyPlayingId, setCurrentlyPlayingId] = useState(null);
+  const [isTTSLoading, setIsTTSLoading] = useState(null);
+
+  const sendMessage = async (query = inputValue) => {
+    if (!query.trim()) return;
+    const userMsg = { id: Date.now(), type: 'user', content: query, timestamp: 'Just now' };
+    setMessages(prev => [...prev, userMsg]);
+    setInputValue('');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query })
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Live AI request failed.');
+      }
+
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          type: 'bot',
+          content: data.data.response,
+          timestamp: 'Just now'
+        }
+      ]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          type: 'bot',
+          content: `Live AI is unavailable right now. ${error.message || 'Please try again in a moment.'}`,
+          timestamp: 'Just now'
+        }
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSend = () => {
-    if (!inputValue.trim()) return;
-    const newMessage = { id: Date.now(), type: 'user', content: inputValue, timestamp: 'Just now' };
-    setMessages([...messages, newMessage]);
-    setInputValue('');
-    
-    // Simulate bot response
-    setTimeout(() => {
-      setMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        type: 'bot',
-        content: getNarrativeResponse(inputValue),
-        timestamp: 'Just now'
-      }]);
-    }, 1200);
+  const handleSend = () => sendMessage(inputValue);
+
+  const readAloud = async (messageId, text) => {
+    if (currentlyPlayingId === messageId && audioRef.current) {
+      audioRef.current.pause();
+      setCurrentlyPlayingId(null);
+      return;
+    }
+
+    setIsTTSLoading(messageId);
+    try {
+      const response = await fetch('http://localhost:5000/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text,
+          target_language_code: 'en-IN',
+          speaker: 'shubh',
+          pace: 1.0
+        })
+      });
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      const audioBase64 = data.data.audios[0];
+      const audioBlob = new Blob([Uint8Array.from(atob(audioBase64), c => c.charCodeAt(0))], { type: 'audio/wav' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+      
+      audioRef.current = new Audio(audioUrl);
+      audioRef.current.onended = () => setCurrentlyPlayingId(null);
+      audioRef.current.play();
+      setCurrentlyPlayingId(messageId);
+    } catch (error) {
+      console.error('TTS error:', error);
+      alert('Failed to generate audio: ' + error.message);
+    } finally {
+      setIsTTSLoading(null);
+    }
   };
 
   return (
@@ -141,9 +207,21 @@ const AIGuide = () => {
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.type === 'user' ? 'bg-heritage-light dark:bg-heritage-dark text-white' : 'bg-accent-light/10 dark:bg-accent-dark/10 text-accent-light dark:text-accent-dark'}`}>
                             {msg.type === 'user' ? <User size={16} /> : <Bot size={16} />}
                           </div>
-                          <div className={`p-5 rounded-3xl shadow-sm border border-border/5 ${msg.type === 'user' ? 'bg-heritage-light/10 dark:bg-heritage-dark/10 rounded-tr-none' : 'bg-background-light dark:bg-background-dark rounded-tl-none'}`}>
-                            <p className="body-text text-sm leading-relaxed">{msg.content}</p>
-                            <p className="text-[8px] ui-label opacity-30 mt-3 text-right">{msg.timestamp}</p>
+                          <div className={`p-5 rounded-3xl shadow-sm border border-border/5 max-w-full ${msg.type === 'user' ? 'bg-heritage-light/10 dark:bg-heritage-dark/10 rounded-tr-none' : 'bg-background-light dark:bg-background-dark rounded-tl-none'}`}>
+                            <p className="body-text text-sm leading-relaxed whitespace-pre-wrap break-words text-left">{msg.content}</p>
+                            <div className="flex items-center justify-between mt-3">
+                              <p className="text-[8px] ui-label opacity-30">{msg.timestamp}</p>
+                              {msg.type === 'bot' && (
+                                <button 
+                                  onClick={() => readAloud(msg.id, msg.content)} 
+                                  disabled={isTTSLoading === msg.id}
+                                  className="text-accent-light dark:text-accent-dark hover:opacity-70 transition-opacity disabled:opacity-50"
+                                >
+                                  {isTTSLoading === msg.id ? <Loader2 size={16} className="animate-spin" /> : 
+                                   currentlyPlayingId === msg.id ? <Pause size={16} /> : <Play size={16} fill="currentColor" />}
+                                </button>
+                              )}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -207,6 +285,7 @@ const AIGuide = () => {
                   onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                   placeholder="Ask me about a place, a legend, or request a story..." 
                   className="w-full bg-surface-light dark:bg-surface-dark border border-border/10 rounded-full px-8 py-5 text-sm focus:outline-none focus:border-accent-light dark:focus:border-accent-dark transition-all shadow-xl pr-20"
+                  disabled={isLoading}
                 />
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
                   <button className="w-10 h-10 rounded-full text-muted-light dark:text-muted-dark hover:text-accent-light dark:hover:text-accent-dark transition-colors flex items-center justify-center">
@@ -214,9 +293,14 @@ const AIGuide = () => {
                   </button>
                   <button 
                     onClick={handleSend}
-                    className="w-12 h-12 rounded-full bg-heritage-light dark:bg-heritage-dark text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform"
+                    disabled={isLoading}
+                    className="w-12 h-12 rounded-full bg-heritage-light dark:bg-heritage-dark text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <Send size={18} />
+                    {isLoading ? (
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Send size={18} />
+                    )}
                   </button>
                 </div>
               </div>

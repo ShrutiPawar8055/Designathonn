@@ -76,7 +76,7 @@ const Spiritual = () => {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute top-4 left-4 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full text-[8px] text-white ui-label">
-                    {place.deity}
+                    {place.category}
                   </div>
                 </div>
                 <div className="flex justify-between items-start">
@@ -86,7 +86,7 @@ const Spiritual = () => {
                       <span className="ui-label text-[8px]">{place.state}</span>
                     </div>
                     <h3 className="heading-h3 text-xl mb-2">{place.name}</h3>
-                    <p className="body-text text-sm opacity-60 line-clamp-2">{place.desc}</p>
+                    <p className="body-text text-sm opacity-60 line-clamp-2">{place.shortDesc}</p>
                   </div>
                   <Link 
                     to={`/place/${place.id}`}

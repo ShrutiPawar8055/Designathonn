@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageWrapper from '../../components/layout/PageWrapper';
 import { motion } from 'framer-motion';
-import { Play, Headset, MapPin, Calendar, Globe, Sparkles, Send, ArrowLeft, Clock, Bot, User } from 'lucide-react';
+import { Play, Pause, Headset, MapPin, Calendar, Globe, Sparkles, Send, ArrowLeft, Clock, Bot, User, Loader2 } from 'lucide-react';
 import { places } from '../../data/places';
 import ReviewSection from '../../components/sections/ReviewSection';
 
@@ -17,33 +17,110 @@ const PlaceDetail = () => {
     }
   ]);
   const [chatInput, setChatInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const audioRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isNarrationLoading, setIsNarrationLoading] = useState(false);
+  const [currentAudioUrl, setCurrentAudioUrl] = useState(null);
 
-  const getPlaceSpecificResponse = (query) => {
-    const responses = [
-      `Ah, yes! ${place?.name} holds so many secrets. Let me tell you about a time when...`,
-      `Imagine standing here centuries ago. The air was filled with the same sense of wonder you feel now...`,
-      `This is a wonderful question about ${place?.name}. Let's walk through the story together...`,
-      `Listen closely. The stones here speak of ${place?.significance}. Let me share what they remember...`,
-      `What a perfect thing to ask about ${place?.name}. Picture this: under the same sky, generations have asked the same question...`
-    ];
-    
-    const randomIndex = Math.floor(Math.random() * responses.length);
-    return responses[randomIndex];
+  const sendMessage = async (query = chatInput) => {
+    if (!query.trim()) return;
+    const userMsg = { id: Date.now(), type: 'user', content: query };
+    setChatMessages(prev => [...prev, userMsg]);
+    setChatInput('');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, placeId: place?.id })
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Live AI request failed.');
+      }
+
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          type: 'bot',
+          content: data.data.response
+        }
+      ]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      setChatMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          type: 'bot',
+          content: `Live AI is unavailable right now. ${error.message || 'Please try again in a moment.'}`
+        }
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSendChat = () => {
-    if (!chatInput.trim()) return;
-    const newMessage = { id: Date.now(), type: 'user', content: chatInput };
-    setChatMessages([...chatMessages, newMessage]);
-    setChatInput('');
-    
-    setTimeout(() => {
-      setChatMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        type: 'bot',
-        content: getPlaceSpecificResponse(chatInput)
-      }]);
-    }, 1000);
+  const handleSendChat = () => sendMessage(chatInput);
+
+  const generateNarrationText = () => {
+    return `${place.name}. ${place.tagline}. ${place.story.what} ${place.story.when} ${place.story.why} ${place.story.mythology} ${place.story.history} ${place.story.legends}`;
+  };
+
+  const startNarration = async () => {
+    if (currentAudioUrl && !isNarrationLoading) {
+      togglePlayPause();
+      return;
+    }
+
+    setIsNarrationLoading(true);
+    try {
+      const text = generateNarrationText();
+      const response = await fetch('http://localhost:5000/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          text,
+          target_language_code: 'en-IN',
+          speaker: 'shubh',
+          pace: 1.0
+        })
+      });
+
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      const audioBase64 = data.data.audios[0];
+      const audioBlob = new Blob([Uint8Array.from(atob(audioBase64), c => c.charCodeAt(0))], { type: 'audio/wav' });
+      const audioUrl = URL.createObjectURL(audioBlob);
+      setCurrentAudioUrl(audioUrl);
+      audioRef.current = new Audio(audioUrl);
+      audioRef.current.onended = () => setIsPlaying(false);
+      audioRef.current.play();
+      setIsPlaying(true);
+    } catch (error) {
+      console.error('Narration error:', error);
+      alert('Failed to generate narration: ' + error.message);
+    } finally {
+      setIsNarrationLoading(false);
+    }
+  };
+
+  const togglePlayPause = () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
   };
 
   if (!place) {
@@ -89,9 +166,9 @@ const PlaceDetail = () => {
                   <MapPin size={14} />
                   <span className="ui-label text-[10px]">{place.state}</span>
                 </div>
-                <button className="flex items-center space-x-3 text-white bg-heritage-dark px-6 py-3 rounded-full hover:bg-heritage-dark/80 transition-all group">
-                  <Play size={16} fill="currentColor" />
-                  <span className="ui-label text-[10px]">BEGIN NARRATION</span>
+                <button onClick={startNarration} disabled={isNarrationLoading} className="flex items-center space-x-3 text-white bg-heritage-dark px-6 py-3 rounded-full hover:bg-heritage-dark/80 transition-all group disabled:opacity-50 disabled:cursor-not-allowed">
+                  {isNarrationLoading ? <Loader2 size={16} className="animate-spin" /> : (isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" />)}
+                  <span className="ui-label text-[10px]">{isNarrationLoading ? 'LOADING...' : (isPlaying ? 'PAUSE NARRATION' : 'BEGIN NARRATION')}</span>
                 </button>
               </div>
             </motion.div>
@@ -235,7 +312,7 @@ const PlaceDetail = () => {
                           <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${msg.type === 'user' ? 'bg-heritage-light dark:bg-heritage-dark text-white' : 'bg-accent-light/10 text-accent-light'}`}>
                             {msg.type === 'user' ? <User size={12} /> : <Bot size={12} />}
                           </div>
-                          <div className={`p-3 rounded-2xl text-xs ${msg.type === 'user' ? 'bg-heritage-light/10 dark:bg-heritage-dark/10 rounded-tr-none' : 'bg-background-light dark:bg-background-dark rounded-tl-none'}`}>
+                          <div className={`p-3 rounded-2xl text-xs max-w-full whitespace-pre-wrap break-words text-left ${msg.type === 'user' ? 'bg-heritage-light/10 dark:bg-heritage-dark/10 rounded-tr-none' : 'bg-background-light dark:bg-background-dark rounded-tl-none'}`}>
                             {msg.content}
                           </div>
                         </div>
@@ -249,7 +326,7 @@ const PlaceDetail = () => {
                         'Tell me about the architecture',
                         'Where can I find peace?'
                       ].map((q) => (
-                        <button key={q} onClick={() => { setChatInput(q); handleSendChat(); }} className="w-full text-left p-4 rounded-2xl border border-border/10 text-xs hover:border-accent-light hover:bg-accent-light/5 transition-all group flex items-center justify-between">
+                        <button key={q} onClick={() => sendMessage(q)} className="w-full text-left p-4 rounded-2xl border border-border/10 text-xs hover:border-accent-light hover:bg-accent-light/5 transition-all group flex items-center justify-between">
                           <span className="opacity-70 group-hover:opacity-100">{q}</span>
                           <ArrowLeft size={14} className="rotate-180 opacity-0 group-hover:opacity-100 transition-all" />
                         </button>
@@ -264,9 +341,18 @@ const PlaceDetail = () => {
                         onKeyPress={(e) => e.key === 'Enter' && handleSendChat()}
                         placeholder="Speak or type your question..." 
                         className="w-full bg-background-light dark:bg-background-dark border border-border/10 rounded-2xl px-6 py-5 text-xs focus:outline-none focus:border-accent-light transition-all shadow-inner"
+                        disabled={isLoading}
                       />
-                      <button onClick={handleSendChat} className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-heritage-light dark:bg-heritage-dark text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
-                        <Send size={16} />
+                      <button 
+                        onClick={handleSendChat} 
+                        disabled={isLoading}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-heritage-light dark:bg-heritage-dark text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isLoading ? (
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <Send size={16} />
+                        )}
                       </button>
                     </div>
                   </div>
@@ -292,8 +378,8 @@ const PlaceDetail = () => {
                         <span className="text-[10px] ui-label">{place.audioGuide.duration} • {place.audioGuide.type}</span>
                       </div>
                     </div>
-                    <button className="w-14 h-14 rounded-full bg-heritage-light dark:bg-heritage-dark text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
-                      <Play size={20} fill="currentColor" />
+                    <button onClick={startNarration} disabled={isNarrationLoading} className="w-14 h-14 rounded-full bg-heritage-light dark:bg-heritage-dark text-white flex items-center justify-center shadow-xl hover:scale-110 transition-transform disabled:opacity-50 disabled:cursor-not-allowed">
+                      {isNarrationLoading ? <Loader2 size={20} className="animate-spin" /> : (isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />)}
                     </button>
                   </div>
                 </div>
