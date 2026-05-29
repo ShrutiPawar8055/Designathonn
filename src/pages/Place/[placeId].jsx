@@ -31,7 +31,7 @@ const PlaceDetail = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query, placeId: place?.id })
@@ -80,7 +80,7 @@ const PlaceDetail = () => {
     setIsNarrationLoading(true);
     try {
       const text = generateNarrationText();
-      const response = await fetch('http://localhost:5000/api/tts', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/tts`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
