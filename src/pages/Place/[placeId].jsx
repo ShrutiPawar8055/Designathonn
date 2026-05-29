@@ -1,14 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageWrapper from '../../components/layout/PageWrapper';
 import { motion } from 'framer-motion';
-import { Play, Headset, MapPin, Calendar, Globe, Sparkles, Send, ArrowLeft, Clock } from 'lucide-react';
+import { Play, Headset, MapPin, Calendar, Globe, Sparkles, Send, ArrowLeft, Clock, Bot, User } from 'lucide-react';
 import { places } from '../../data/places';
 import ReviewSection from '../../components/sections/ReviewSection';
 
 const PlaceDetail = () => {
   const { placeId } = useParams();
   const place = places.find(p => p.id === placeId);
+  const [chatMessages, setChatMessages] = useState([
+    {
+      id: 1,
+      type: 'bot',
+      content: `Welcome to ${place?.name || 'this sacred place'}. I can feel the history in the air here. What would you like to know?`
+    }
+  ]);
+  const [chatInput, setChatInput] = useState('');
+
+  const getPlaceSpecificResponse = (query) => {
+    const responses = [
+      `Ah, yes! ${place?.name} holds so many secrets. Let me tell you about a time when...`,
+      `Imagine standing here centuries ago. The air was filled with the same sense of wonder you feel now...`,
+      `This is a wonderful question about ${place?.name}. Let's walk through the story together...`,
+      `Listen closely. The stones here speak of ${place?.significance}. Let me share what they remember...`,
+      `What a perfect thing to ask about ${place?.name}. Picture this: under the same sky, generations have asked the same question...`
+    ];
+    
+    const randomIndex = Math.floor(Math.random() * responses.length);
+    return responses[randomIndex];
+  };
+
+  const handleSendChat = () => {
+    if (!chatInput.trim()) return;
+    const newMessage = { id: Date.now(), type: 'user', content: chatInput };
+    setChatMessages([...chatMessages, newMessage]);
+    setChatInput('');
+    
+    setTimeout(() => {
+      setChatMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        type: 'bot',
+        content: getPlaceSpecificResponse(chatInput)
+      }]);
+    }, 1000);
+  };
 
   if (!place) {
     return (
@@ -192,6 +228,20 @@ const PlaceDetail = () => {
                   </div>
                   
                   <div className="p-10 space-y-8">
+                    {/* Chat Messages */}
+                    <div className="space-y-4 max-h-64 overflow-y-auto">
+                      {chatMessages.map(msg => (
+                        <div key={msg.id} className={`flex gap-3 ${msg.type === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                          <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${msg.type === 'user' ? 'bg-heritage-light dark:bg-heritage-dark text-white' : 'bg-accent-light/10 text-accent-light'}`}>
+                            {msg.type === 'user' ? <User size={12} /> : <Bot size={12} />}
+                          </div>
+                          <div className={`p-3 rounded-2xl text-xs ${msg.type === 'user' ? 'bg-heritage-light/10 dark:bg-heritage-dark/10 rounded-tr-none' : 'bg-background-light dark:bg-background-dark rounded-tl-none'}`}>
+                            {msg.content}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
                     <div className="space-y-3">
                       <p className="ui-label text-[8px] opacity-40">SUGGESTED ENQUIRIES</p>
                       {[
@@ -199,7 +249,7 @@ const PlaceDetail = () => {
                         'Tell me about the architecture',
                         'Where can I find peace?'
                       ].map((q) => (
-                        <button key={q} className="w-full text-left p-4 rounded-2xl border border-border/10 text-xs hover:border-accent-light hover:bg-accent-light/5 transition-all group flex items-center justify-between">
+                        <button key={q} onClick={() => { setChatInput(q); handleSendChat(); }} className="w-full text-left p-4 rounded-2xl border border-border/10 text-xs hover:border-accent-light hover:bg-accent-light/5 transition-all group flex items-center justify-between">
                           <span className="opacity-70 group-hover:opacity-100">{q}</span>
                           <ArrowLeft size={14} className="rotate-180 opacity-0 group-hover:opacity-100 transition-all" />
                         </button>
@@ -209,10 +259,13 @@ const PlaceDetail = () => {
                     <div className="relative">
                       <input 
                         type="text" 
+                        value={chatInput}
+                        onChange={(e) => setChatInput(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleSendChat()}
                         placeholder="Speak or type your question..." 
                         className="w-full bg-background-light dark:bg-background-dark border border-border/10 rounded-2xl px-6 py-5 text-xs focus:outline-none focus:border-accent-light transition-all shadow-inner"
                       />
-                      <button className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-heritage-light dark:bg-heritage-dark text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
+                      <button onClick={handleSendChat} className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-xl bg-heritage-light dark:bg-heritage-dark text-white flex items-center justify-center shadow-lg hover:scale-105 transition-transform">
                         <Send size={16} />
                       </button>
                     </div>
