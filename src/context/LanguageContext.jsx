@@ -5,17 +5,20 @@ import { initReactI18next } from 'react-i18next';
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('language') || 'en';
-  });
+  const [language, setLanguage] = useState('en');
 
   useEffect(() => {
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+      setLanguage(savedLanguage);
+    }
+
     i18n.use(initReactI18next).init({
       resources: {
         en: { translation: { welcome: "Welcome" } }, // Placeholders
         hi: { translation: { welcome: "स्वागत है" } },
       },
-      lng: language,
+      lng: savedLanguage || 'en',
       fallbackLng: "en",
       interpolation: { escapeValue: false }
     });
