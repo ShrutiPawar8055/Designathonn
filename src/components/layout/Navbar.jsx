@@ -6,11 +6,13 @@ import { useLanguage } from '../../context/LanguageContext';
 import ThemeToggle from '../ui/ThemeToggle';
 import LanguageSelector from '../ui/LanguageSelector';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,11 +23,11 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Stories', path: '/stories' },
-    { name: 'Collections', path: '/collections' },
-    { name: 'AI Guide', path: '/ai-guide' },
-    { name: 'About', path: '/about' },
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.stories'), path: '/stories' },
+    { name: t('nav.collections'), path: '/collections' },
+    { name: t('nav.aiGuide'), path: '/ai-guide' },
+    { name: t('nav.about'), path: '/about' },
   ];
 
   return (

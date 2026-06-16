@@ -3,43 +3,41 @@ import PageWrapper from '../components/layout/PageWrapper';
 import { motion } from 'framer-motion';
 import { places } from '../data/places';
 import { Link } from 'react-router-dom';
-import { Sparkles, History, Landmark, Compass } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import spiritualImg from '../assets/collections/spiritual.png';
 import historicImg from '../assets/collections/historic.png';
 import mythologicalImg from '../assets/collections/mythological.png';
 import coastalImg from '../assets/collections/coastal.png';
+import { useTranslation } from 'react-i18next';
 
 const Collections = () => {
+  const { t } = useTranslation();
   const categories = [
     { 
-      name: 'Spiritual', 
-      icon: <Sparkles className="text-accent-light" />, 
-      desc: 'Sacred journeys and divine connections.',
+      name: t('collections.spiritual.title'), 
+      desc: t('collections.spiritual.description'),
       count: places.filter(p => p.category === 'Spiritual').length,
       img: spiritualImg,
-      route: '/spiritual' // Or we can link to an explore page with filter
+      route: '/spiritual'
     },
     { 
-      name: 'Historic', 
-      icon: <History className="text-accent-light" />, 
-      desc: 'Architectural marvels and ancient legacies.',
+      name: t('collections.historical.title'), 
+      desc: t('collections.historical.description'),
       count: places.filter(p => p.category === 'Historic').length,
       img: historicImg,
       route: '/explore'
     },
     { 
-      name: 'Mythological', 
-      icon: <Landmark className="text-accent-light" />, 
-      desc: 'Where legends and reality intertwine.',
-      count: 0, // Placeholder
+      name: t('collections.mythological.title'), 
+      desc: t('collections.mythological.description'),
+      count: 0,
       img: mythologicalImg,
       route: '/explore'
     },
     { 
-      name: 'Coastal', 
-      icon: <Compass className="text-accent-light" />, 
-      desc: 'Maritime stories and sea-side wonders.',
-      count: 0, // Placeholder
+      name: t('collections.coastal.title'), 
+      desc: t('collections.coastal.description'),
+      count: 0,
       img: coastalImg,
       route: '/explore'
     }

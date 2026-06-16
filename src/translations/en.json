@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "home": "Home",
+    "stories": "Stories",
+    "collections": "Collections",
+    "aiGuide": "AI Guide",
+    "about": "About",
+    "search": "Search heritage sites...",
+    "theme": "Theme",
+    "language": "Language"
+  },
+  "hero": {
+    "title": "Reverie",
+    "subtitle": "Every place remembers.",
+    "description": "An AI-powered cinematic storytelling companion. We help you hear the soul of every place you visit.",
+    "cta": "Begin Your Journey",
+    "trendingStories": "Trending Stories"
+  },
+  "collections": {
+    "title": "Curated Collections",
+    "subtitle": "Explore stories organized by themes that resonate with you",
+    "spiritual": {
+      "title": "Spiritual",
+      "description": "Divine destinations and sacred journeys"
+    },
+    "historical": {
+      "title": "Historical",
+      "description": "Witness the grandeur of empires past"
+    },
+    "mythological": {
+      "title": "Mythological",
+      "description": "Where legends and reality intertwine"
+    },
+    "coastal": {
+      "title": "Coastal",
+      "description": "Tales from the shores of time"
+    },
+    "journeys": "journeys available"
+  },
+  "storiesPage": {
+    "title": "The Power of Stories",
+    "description": "Stories have been humanity's oldest tool for remembering. They weave facts into emotions, making memories stick like nothing else can.",
+    "howStoriesHelp": {
+      "title": "How Stories Help Us Remember",
+      "emotion": "Emotional Resonance",
+      "emotionDesc": "Stories trigger feelings, which are powerful memory anchors.",
+      "structure": "Narrative Structure",
+      "structureDesc": "A beginning, middle, and end give our brain a framework to hang information on.",
+      "visual": "Mental Imagery",
+      "visualDesc": "Descriptive language creates vivid mental pictures we can recall easily.",
+      "connection": "Personal Connection",
+      "connectionDesc": "We remember stories that reflect our own experiences or aspirations."
+    },
+    "featuredStories": "Featured Stories",
+    "backHome": "Back to Home"
+  },
+  "place": {
+    "backToCollections": "Back to Collections",
+    "beginNarration": "Begin Narration",
+    "stopNarration": "Stop Narration",
+    "openingNarration": "Opening Narration",
+    "aiGuide": "AI Guide",
+    "aiGuidePlaceholder": "Ask the AI Guide anything about this place...",
+    "send": "Send"
+  },
+  "footer": {
+    "tagline": "Every place remembers.",
+    "description": "An AI-powered cinematic storytelling companion. We help you hear the soul of every place you visit.",
+    "explore": "Explore",
+    "company": "Company",
+    "subscribe": "Subscribe",
+    "subscribePlaceholder": "Email address",
+    "join": "Join",
+    "ourStory": "Our Story",
+    "methodology": "Methodology",
+    "careers": "Careers",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "copyright": "© 2025 REVERIE. ALL RIGHTS RESERVED."
+  }
+}

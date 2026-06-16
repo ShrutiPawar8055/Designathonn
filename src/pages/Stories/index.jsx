@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { Brain, BookOpen, Sparkles, Heart } from 'lucide-react';
 import { places } from '../../data/places';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const Stories = () => {
+  const { t } = useTranslation();
   return (
     <PageWrapper>
       {/* Hero Section */}
@@ -17,29 +19,34 @@ const Stories = () => {
             className="text-center mb-24"
           >
             <p className="ui-label text-accent-light dark:text-accent-dark mb-6 tracking-[0.2em]">THE MAGIC OF STORIES</p>
-            <h1 className="display-h1 mb-8">Why We Remember Stories</h1>
+            <h1 className="display-h1 mb-8">{t('storiesPage.title')}</h1>
             <p className="body-text text-xl opacity-80 max-w-3xl mx-auto">
-              Facts fade, but stories stay with us forever. Discover how Reverie uses the power of narrative to make India's heritage unforgettable.
+              {t('storiesPage.description')}
             </p>
           </motion.div>
 
           {/* Why Stories Work Section */}
-          <div className="grid md:grid-cols-3 gap-10 mb-24">
+          <div className="grid md:grid-cols-4 gap-10 mb-24">
             {[
               {
                 icon: <Brain className="text-accent-light dark:text-accent-dark" size={32} />,
-                title: "Stories Activate Our Brain",
-                desc: "When we hear a story, multiple parts of our brain light up—making memories 22x more likely to stick compared to just facts alone."
+                title: t('storiesPage.howStoriesHelp.emotion'),
+                desc: t('storiesPage.howStoriesHelp.emotionDesc')
               },
               {
-                icon: <Heart className="text-heritage-light dark:text-heritage-dark" size={32} />,
-                title: "Stories Build Emotion",
-                desc: "We don't just remember what happened—we remember how it felt. Emotion is the glue that makes memories permanent."
+                icon: <BookOpen className="text-heritage-light dark:text-heritage-dark" size={32} />,
+                title: t('storiesPage.howStoriesHelp.structure'),
+                desc: t('storiesPage.howStoriesHelp.structureDesc')
               },
               {
                 icon: <Sparkles className="text-accent-light dark:text-accent-dark" size={32} />,
-                title: "Stories Create Connection",
-                desc: "Stories link the past to the present, making ancient places feel like they're part of our own story too."
+                title: t('storiesPage.howStoriesHelp.visual'),
+                desc: t('storiesPage.howStoriesHelp.visualDesc')
+              },
+              {
+                icon: <Heart className="text-heritage-light dark:text-heritage-dark" size={32} />,
+                title: t('storiesPage.howStoriesHelp.connection'),
+                desc: t('storiesPage.howStoriesHelp.connectionDesc')
               }
             ].map((item, i) => (
               <motion.div
@@ -62,8 +69,8 @@ const Stories = () => {
           <div className="mb-24">
             <div className="flex items-end justify-between mb-16">
               <div>
-                <p className="ui-label text-accent-light dark:text-accent-dark mb-4">FEATURED</p>
-                <h2 className="heading-h2">Stories You'll Remember</h2>
+                <p className="ui-label text-accent-light dark:text-accent-dark mb-4">{t('storiesPage.featuredStories')}</p>
+                <h2 className="heading-h2">{t('storiesPage.featuredStories')}</h2>
               </div>
             </div>
 

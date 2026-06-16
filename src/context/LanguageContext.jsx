@@ -1,6 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import enTranslations from '../translations/en.json';
+import hiTranslations from '../translations/hi.json';
+import mrTranslations from '../translations/mr.json';
 
 const LanguageContext = createContext();
 
@@ -15,8 +18,9 @@ export const LanguageProvider = ({ children }) => {
 
     i18n.use(initReactI18next).init({
       resources: {
-        en: { translation: { welcome: "Welcome" } }, // Placeholders
-        hi: { translation: { welcome: "स्वागत है" } },
+        en: { translation: enTranslations },
+        hi: { translation: hiTranslations },
+        mr: { translation: mrTranslations },
       },
       lng: savedLanguage || 'en',
       fallbackLng: "en",

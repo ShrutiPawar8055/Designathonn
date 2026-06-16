@@ -5,8 +5,10 @@ import { motion } from 'framer-motion';
 import { Play, Pause, Headset, MapPin, Calendar, Globe, Sparkles, Send, ArrowLeft, Clock, Bot, User, Loader2 } from 'lucide-react';
 import { places } from '../../data/places';
 import ReviewSection from '../../components/sections/ReviewSection';
+import { useTranslation } from 'react-i18next';
 
 const PlaceDetail = () => {
+  const { t } = useTranslation();
   const { placeId } = useParams();
   const place = places.find(p => p.id === placeId);
   const [chatMessages, setChatMessages] = useState([
