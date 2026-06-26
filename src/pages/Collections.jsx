@@ -48,10 +48,10 @@ const Collections = () => {
       <section className="pt-40 pb-24 bg-background-light dark:bg-background-dark min-h-screen">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mb-20">
-            <p className="ui-label text-accent-light dark:text-accent-dark mb-6 tracking-[0.2em]">CURATED ARCHIVES</p>
-            <h1 className="display-h1 mb-8">Collections</h1>
+            <p className="ui-label text-accent-light dark:text-accent-dark mb-6 tracking-[0.2em]">{t('collectionsPage.curatedArchives')}</p>
+            <h1 className="display-h1 mb-8">{t('collectionsPage.title')}</h1>
             <p className="body-text opacity-70">
-              Discover India's heritage through thematic journeys. Each collection is a curated archive of stories, myths, and historical milestones.
+              {t('collectionsPage.description')}
             </p>
           </div>
 
@@ -80,7 +80,7 @@ const Collections = () => {
                     <p className="body-text text-xs opacity-60 mb-4">{cat.desc}</p>
                     
                     <div className="flex items-center justify-between">
-                      <span className="ui-label text-[8px] opacity-40">{cat.count} JOURNEYS</span>
+                      <span className="ui-label text-[8px] opacity-40">{cat.count} {t('collectionsPage.journeys')}</span>
                       <div className="w-8 h-8 rounded-full border border-border/10 flex items-center justify-center hover:bg-heritage-light dark:hover:bg-heritage-dark hover:text-white transition-all">
                         <Sparkles size={12} />
                       </div>

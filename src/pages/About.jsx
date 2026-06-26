@@ -2,8 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Users, Sparkles, BookOpen, Heart } from 'lucide-react';
 import PageWrapper from '../components/layout/PageWrapper';
+import { useTranslation } from 'react-i18next';
 
 const About = () => {
+  const { t } = useTranslation();
   return (
     <PageWrapper>
       <div className="py-24 px-6 max-w-6xl mx-auto">
@@ -14,10 +16,10 @@ const About = () => {
           className="text-center mb-20"
         >
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-heritage-light dark:text-heritage-dark">
-            About Reverie
+            {t('aboutPage.aboutReverie')}
           </h1>
           <p className="text-xl opacity-80 max-w-2xl mx-auto">
-            Where history whispers and stories come alive
+            {t('aboutPage.tagline')}
           </p>
         </motion.div>
 
@@ -35,15 +37,15 @@ const About = () => {
             <div className="flex-1 text-center md:text-left">
               <h2 className="text-3xl font-bold mb-3">Shruti Pawar</h2>
               <p className="ui-label tracking-[0.2em] text-accent-light dark:text-accent-dark mb-4">
-                CREATOR & DEVELOPER
+                {t('aboutPage.creatorDeveloper')}
               </p>
               <p className="opacity-80 mb-6 text-lg">
-                Built with passion and devotion during <span className="font-bold text-heritage-light dark:text-heritage-dark">Designathon 2024</span>, Reverie is more than just a travel companion—it's a bridge between generations, connecting the past with the present through the magic of storytelling and technology.
+                {t('aboutPage.creatorDesc1')} <span className="font-bold text-heritage-light dark:text-heritage-dark">Designathon 2024</span>, {t('aboutPage.creatorDesc2')}
               </p>
               <div className="flex items-center justify-center md:justify-start gap-3">
                 <span className="flex items-center gap-2 text-sm opacity-70">
                   <Heart size={16} className="text-accent-light dark:text-accent-dark" />
-                  Made with love in India
+                  {t('aboutPage.madeWithLove')}
                 </span>
               </div>
             </div>
@@ -61,10 +63,10 @@ const About = () => {
               <div className="p-3 bg-accent-light/10 dark:bg-accent-dark/10 rounded-full">
                 <BookOpen className="text-accent-light dark:text-accent-dark" size={24} />
               </div>
-              <h3 className="text-2xl font-bold">Our Mission</h3>
+              <h3 className="text-2xl font-bold">{t('aboutPage.ourMission')}</h3>
             </div>
             <p className="text-lg opacity-80 leading-relaxed">
-              Reverie brings India's heritage alive through immersive, cinematic storytelling. We believe every temple, every ruin, and every city has a soul waiting to be discovered—not just visited.
+              {t('aboutPage.missionDesc')}
             </p>
           </motion.div>
           <motion.div
@@ -76,10 +78,10 @@ const About = () => {
               <div className="p-3 bg-heritage-light/10 dark:bg-heritage-dark/10 rounded-full">
                 <Sparkles className="text-heritage-light dark:text-heritage-dark" size={24} />
               </div>
-              <h3 className="text-2xl font-bold">What Makes Us Special</h3>
+              <h3 className="text-2xl font-bold">{t('aboutPage.whatMakesUsSpecial')}</h3>
             </div>
             <p className="text-lg opacity-80 leading-relaxed">
-              We don't just give you facts—we weave together history, mythology, and human emotion into captivating narratives that transport you through time.
+              {t('aboutPage.specialDesc')}
             </p>
           </motion.div>
         </div>
@@ -93,33 +95,33 @@ const About = () => {
         >
           <div className="flex items-center justify-center gap-3 mb-6">
             <Users className="text-accent-light dark:text-accent-dark" size={32} />
-            <h2 className="text-3xl font-bold">Open for Collaboration!</h2>
+            <h2 className="text-3xl font-bold">{t('aboutPage.openForCollaboration')}</h2>
           </div>
           
           <p className="text-xl opacity-80 max-w-3xl mx-auto mb-10 leading-relaxed">
-            Are you a local guide, historian, storyteller, or heritage enthusiast? We'd love to collaborate with you! Help us uncover more hidden stories, create richer experiences, and make Reverie the most authentic cultural companion for travelers exploring India.
+            {t('aboutPage.collabDesc')}
           </p>
 
           <div className="grid md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
             <div className="bg-background-light dark:bg-background-dark p-8 rounded-2xl">
               <MapPin size={28} className="mx-auto mb-4 text-accent-light dark:text-accent-dark" />
-              <h4 className="font-bold text-lg mb-2">Local Guides</h4>
-              <p className="opacity-70 text-sm">Share your on-the-ground knowledge and insider stories</p>
+              <h4 className="font-bold text-lg mb-2">{t('aboutPage.localGuides')}</h4>
+              <p className="opacity-70 text-sm">{t('aboutPage.localGuidesDesc')}</p>
             </div>
             <div className="bg-background-light dark:bg-background-dark p-8 rounded-2xl">
               <BookOpen size={28} className="mx-auto mb-4 text-heritage-light dark:text-heritage-dark" />
-              <h4 className="font-bold text-lg mb-2">Historians & Scholars</h4>
-              <p className="opacity-70 text-sm">Help us ensure historical accuracy and deep cultural context</p>
+              <h4 className="font-bold text-lg mb-2">{t('aboutPage.historiansScholars')}</h4>
+              <p className="opacity-70 text-sm">{t('aboutPage.historiansScholarsDesc')}</p>
             </div>
             <div className="bg-background-light dark:bg-background-dark p-8 rounded-2xl">
               <Heart size={28} className="mx-auto mb-4 text-accent-light dark:text-accent-dark" />
-              <h4 className="font-bold text-lg mb-2">Storytellers & Artists</h4>
-              <p className="opacity-70 text-sm">Bring the magic of India's stories to life in new ways</p>
+              <h4 className="font-bold text-lg mb-2">{t('aboutPage.storytellersArtists')}</h4>
+              <p className="opacity-70 text-sm">{t('aboutPage.storytellersArtistsDesc')}</p>
             </div>
           </div>
 
           <button className="px-10 py-4 bg-heritage-light dark:bg-heritage-dark text-white rounded-full ui-label tracking-[0.2em] hover:scale-105 transition-transform shadow-lg">
-            GET IN TOUCH
+            {t('aboutPage.getInTouch')}
           </button>
         </motion.div>
 

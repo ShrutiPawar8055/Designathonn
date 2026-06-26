@@ -5,8 +5,11 @@ import ProblemStatementStrip from '../../components/sections/ProblemStatementStr
 import ExploreByMood from '../../components/sections/ExploreByMood';
 import TrendingStories from '../../components/sections/TrendingStories';
 import SpiritualJourneys from '../../components/sections/PlaceGrid';
+import { useTranslation } from 'react-i18next';
 
 const Home = () => {
+  const { t } = useTranslation();
+  
   return (
     <PageWrapper>
       <HeroBanner />
@@ -19,15 +22,15 @@ const Home = () => {
       <section className="py-24 bg-surface-light dark:bg-surface-dark">
         <div className="container mx-auto px-6">
           <div className="text-center mb-20">
-            <p className="ui-label text-accent-light dark:text-accent-dark mb-4">THE JOURNEY</p>
-            <h2 className="heading-h2">How Reverie works</h2>
+            <p className="ui-label text-accent-light dark:text-accent-dark mb-4">{t('howItWorks.sectionTitle')}</p>
+            <h2 className="heading-h2">{t('howItWorks.title')}</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
             {[
-              { step: '01', title: 'Choose a Place', desc: 'Select from our curated list of sacred and historical sites across India.' },
-              { step: '02', title: 'Hear Its Story', desc: 'Immerse yourself in cinematic narration and ambient sounds that bring history to life.' },
-              { step: '03', title: 'Ask Your Guide', desc: 'Converse with your AI guide to dive deeper into specific myths, facts, or architecture.' },
+              { step: '01', title: t('howItWorks.step1Title'), desc: t('howItWorks.step1Desc') },
+              { step: '02', title: t('howItWorks.step2Title'), desc: t('howItWorks.step2Desc') },
+              { step: '03', title: t('howItWorks.step3Title'), desc: t('howItWorks.step3Desc') },
             ].map((item, i) => (
               <div key={i} className="relative group text-center">
                 <span className="display-h1 text-8xl opacity-5 absolute -top-10 left-1/2 -translate-x-1/2 group-hover:opacity-10 transition-opacity">

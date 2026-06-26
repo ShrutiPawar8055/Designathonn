@@ -4,9 +4,9 @@ import { useLanguage } from '../../context/LanguageContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'hi', name: 'हिंदी', flag: '🇮🇳' },
-  { code: 'mr', name: 'मराठी', flag: '🇮🇳' },
+  { code: 'en', name: 'English' },
+  { code: 'hi', name: 'हिंदी' },
+  { code: 'mr', name: 'मराठी' },
 ];
 
 const LanguageSelector = () => {
@@ -22,7 +22,7 @@ const LanguageSelector = () => {
         className="flex items-center space-x-2 p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-muted-light dark:text-muted-dark"
       >
         <Globe size={18} />
-        <span className="ui-label text-[10px]">{currentLang.code}</span>
+        <span className="ui-label text-[10px]">{currentLang.name}</span>
         <ChevronDown size={14} className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
@@ -37,9 +37,9 @@ const LanguageSelector = () => {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.95 }}
-              className="absolute right-0 mt-2 w-64 bg-surface-light dark:bg-surface-dark border border-border/10 shadow-xl rounded-xl z-50 overflow-hidden"
+              className="absolute right-0 mt-2 w-48 bg-surface-light dark:bg-surface-dark border border-border/10 shadow-xl rounded-xl z-50 overflow-hidden"
             >
-              <div className="p-2 grid grid-cols-2 gap-1">
+              <div className="p-2 flex flex-col gap-1">
                 {languages.map((lang) => (
                   <button
                     key={lang.code}
@@ -47,12 +47,11 @@ const LanguageSelector = () => {
                       changeLanguage(lang.code);
                       setIsOpen(false);
                     }}
-                    className={`flex items-center space-x-3 p-3 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${
+                    className={`flex items-center p-3 rounded-lg transition-colors hover:bg-black/5 dark:hover:bg-white/5 ${
                       language === lang.code ? 'bg-accent-light/10 text-accent-light dark:text-accent-dark' : 'text-primary-light dark:text-primary-dark'
                     }`}
                   >
-                    <span className="text-lg">{lang.flag}</span>
-                    <span className="text-xs font-medium">{lang.name}</span>
+                    <span className="text-sm font-medium">{lang.name}</span>
                   </button>
                 ))}
               </div>

@@ -131,8 +131,8 @@ const PlaceDetail = () => {
     return (
       <PageWrapper>
         <div className="container mx-auto px-6 py-40 text-center">
-          <h1 className="heading-h2 mb-8">Journey Not Found</h1>
-          <Link to="/spiritual" className="ui-label text-accent-light">RETURN TO EXPLORE</Link>
+          <h1 className="heading-h2 mb-8">{t('common.journeyNotFound')}</h1>
+          <Link to="/spiritual" className="ui-label text-accent-light">{t('common.returnToExplore')}</Link>
         </div>
       </PageWrapper>
     );
@@ -156,7 +156,7 @@ const PlaceDetail = () => {
           <div className="container mx-auto px-6">
             <Link to="/spiritual" className="inline-flex items-center space-x-2 text-white/60 hover:text-white mb-8 transition-colors group">
               <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
-              <span className="ui-label text-[10px]">BACK TO JOURNEYS</span>
+              <span className="ui-label text-[10px]">{t('place.backToJourneys')}</span>
             </Link>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -172,7 +172,7 @@ const PlaceDetail = () => {
                 </div>
                 <button onClick={startNarration} disabled={isNarrationLoading} className="flex items-center space-x-3 text-white bg-heritage-dark px-6 py-3 rounded-full hover:bg-heritage-dark/80 transition-all group disabled:opacity-50 disabled:cursor-not-allowed">
                   {isNarrationLoading ? <Loader2 size={16} className="animate-spin" /> : (isPlaying ? <Pause size={16} fill="currentColor" /> : <Play size={16} fill="currentColor" />)}
-                  <span className="ui-label text-[10px]">{isNarrationLoading ? 'LOADING...' : (isPlaying ? 'PAUSE NARRATION' : 'BEGIN NARRATION')}</span>
+                  <span className="ui-label text-[10px]">{isNarrationLoading ? t('place.loading') : (isPlaying ? t('place.stopNarration') : t('place.beginNarration'))}</span>
                 </button>
               </div>
             </motion.div>
@@ -185,19 +185,19 @@ const PlaceDetail = () => {
         <div className="container mx-auto px-6 py-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="flex flex-col">
-              <span className="ui-label text-[8px] opacity-40 mb-1">REGION</span>
+              <span className="ui-label text-[8px] opacity-40 mb-1">{t('place.region')}</span>
               <span className="font-heading italic text-sm">{place.region} India</span>
             </div>
             <div className="flex flex-col">
-              <span className="ui-label text-[8px] opacity-40 mb-1">BEST TIME</span>
+              <span className="ui-label text-[8px] opacity-40 mb-1">{t('place.bestTime')}</span>
               <span className="font-heading italic text-sm">{place.bestTime}</span>
             </div>
             <div className="flex flex-col">
-              <span className="ui-label text-[8px] opacity-40 mb-1">LANGUAGE</span>
+              <span className="ui-label text-[8px] opacity-40 mb-1">{t('place.language')}</span>
               <span className="font-heading italic text-sm">{place.language}</span>
             </div>
             <div className="flex flex-col">
-              <span className="ui-label text-[8px] opacity-40 mb-1">SIGNIFICANCE</span>
+              <span className="ui-label text-[8px] opacity-40 mb-1">{t('place.significance')}</span>
               <span className="font-heading italic text-sm">{place.significance}</span>
             </div>
           </div>
@@ -217,19 +217,19 @@ const PlaceDetail = () => {
                 className="space-y-10"
               >
                 <div className="inline-block border-b-2 border-heritage-light dark:border-heritage-dark pb-2">
-                  <h2 className="ui-label text-base tracking-[0.2em]">THE SOUL OF {place.name.toUpperCase()}</h2>
+                  <h2 className="ui-label text-base tracking-[0.2em]">{t('place.theSoulOf')} {place.name.toUpperCase()}</h2>
                 </div>
                 <div className="space-y-8">
                   <div className="space-y-4">
-                    <h3 className="heading-h3 text-accent-light dark:text-accent-dark italic text-xl">What happened?</h3>
+                    <h3 className="heading-h3 text-accent-light dark:text-accent-dark italic text-xl">{t('place.whatHappened')}</h3>
                     <p className="body-text text-xl leading-relaxed opacity-90">{place.story.what}</p>
                   </div>
                   <div className="space-y-4">
-                    <h3 className="heading-h3 text-accent-light dark:text-accent-dark italic text-xl">When did it happen?</h3>
+                    <h3 className="heading-h3 text-accent-light dark:text-accent-dark italic text-xl">{t('place.whenHappened')}</h3>
                     <p className="body-text text-xl leading-relaxed opacity-90">{place.story.when}</p>
                   </div>
                   <div className="space-y-4">
-                    <h3 className="heading-h3 text-accent-light dark:text-accent-dark italic text-xl">Why is it popular?</h3>
+                    <h3 className="heading-h3 text-accent-light dark:text-accent-dark italic text-xl">{t('place.whyPopular')}</h3>
                     <p className="body-text text-xl leading-relaxed opacity-90 font-medium text-heritage-light dark:text-heritage-dark">{place.story.why}</p>
                   </div>
                 </div>
@@ -241,14 +241,14 @@ const PlaceDetail = () => {
                 viewport={{ once: true }}
                 className="space-y-8"
               >
-                <h2 className="heading-h2">Mythology & Origin</h2>
+                <h2 className="heading-h2">{t('place.mythologyOrigin')}</h2>
                 <p className="body-text text-xl leading-relaxed italic opacity-80 border-l-4 border-accent-light/30 pl-8">
                   "{place.story.mythology}"
                 </p>
               </motion.div>
 
               <div className="space-y-8">
-                <h2 className="heading-h2">The Living History</h2>
+                <h2 className="heading-h2">{t('place.livingHistory')}</h2>
                 <p className="body-text">
                   {place.story.history}
                 </p>
@@ -256,7 +256,7 @@ const PlaceDetail = () => {
                   <div className="absolute top-0 right-0 w-32 h-32 bg-heritage-light/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110" />
                   <h4 className="ui-label text-accent-light dark:text-accent-dark mb-6 flex items-center space-x-2">
                     <Sparkles size={14} />
-                    <span>CURATED LEGEND</span>
+                    <span>{t('place.curatedLegend')}</span>
                   </h4>
                   <p className="body-text text-lg opacity-80 leading-relaxed">
                     {place.story.legends}
@@ -267,8 +267,8 @@ const PlaceDetail = () => {
               {/* Timeline */}
               <div className="space-y-16">
                 <div className="flex items-end justify-between border-b border-border/10 pb-6">
-                  <h2 className="heading-h2">Sacred Timeline</h2>
-                  <p className="ui-label text-[10px] opacity-40">CHRONICLES OF {place.name.toUpperCase()}</p>
+                  <h2 className="heading-h2">{t('place.sacredTimeline')}</h2>
+                  <p className="ui-label text-[10px] opacity-40">{t('place.chroniclesOf')} {place.name.toUpperCase()}</p>
                 </div>
                 <div className="space-y-0 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-px before:bg-border/20">
                   {place.timeline.map((item, i) => (
@@ -301,11 +301,11 @@ const PlaceDetail = () => {
                         <Sparkles size={20} />
                       </div>
                       <div>
-                        <h3 className="ui-label tracking-widest text-xs">REVERIE GUIDE</h3>
-                        <p className="text-[10px] opacity-40 uppercase tracking-tighter">Your companion for {place.name}</p>
+                        <h3 className="ui-label tracking-widest text-xs">{t('place.reverieGuide')}</h3>
+                        <p className="text-[10px] opacity-40 uppercase tracking-tighter">{t('place.yourCompanionFor')} {place.name}</p>
                       </div>
                     </div>
-                    <p className="text-xs opacity-70 leading-relaxed italic">"Every stone here has a memory. What would you like to uncover today?"</p>
+                    <p className="text-xs opacity-70 leading-relaxed italic">"{t('place.everyStone')}"</p>
                   </div>
                   
                   <div className="p-10 space-y-8">
@@ -324,12 +324,12 @@ const PlaceDetail = () => {
                     </div>
 
                     <div className="space-y-3">
-                      <p className="ui-label text-[8px] opacity-40">SUGGESTED ENQUIRIES</p>
+                      <p className="ui-label text-[8px] opacity-40">{t('place.suggestedEnquiries')}</p>
                       {[
-                        `What is the best time for ${place.name === 'Varanasi' ? 'Ganga Aarti' : 'Darshan'}?`,
-                        'Tell me about the architecture',
-                        'Where can I find peace?'
-                      ].map((q) => (
+                        t('place.bestTimeForAarti'),
+                        t('place.tellMeArchitecture'),
+                        t('place.whereFindPeace')
+                      ].map((q, i) => (
                         <button key={q} onClick={() => sendMessage(q)} className="w-full text-left p-4 rounded-2xl border border-border/10 text-xs hover:border-accent-light hover:bg-accent-light/5 transition-all group flex items-center justify-between">
                           <span className="opacity-70 group-hover:opacity-100">{q}</span>
                           <ArrowLeft size={14} className="rotate-180 opacity-0 group-hover:opacity-100 transition-all" />
@@ -343,7 +343,7 @@ const PlaceDetail = () => {
                         value={chatInput}
                         onChange={(e) => setChatInput(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handleSendChat()}
-                        placeholder="Speak or type your question..." 
+                        placeholder={t('place.aiGuidePlaceholder')} 
                         className="w-full bg-background-light dark:bg-background-dark border border-border/10 rounded-2xl px-6 py-5 text-xs focus:outline-none focus:border-accent-light transition-all shadow-inner"
                         disabled={isLoading}
                       />
@@ -366,7 +366,7 @@ const PlaceDetail = () => {
                   <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center space-x-3">
                       <Headset size={20} className="text-accent-light dark:text-accent-dark" />
-                      <h3 className="ui-label tracking-widest text-xs">VOICE NARRATION</h3>
+                      <h3 className="ui-label tracking-widest text-xs">{t('place.voiceNarration')}</h3>
                     </div>
                     <div className="flex space-x-1">
                       {[1, 2, 3, 4].map(i => (

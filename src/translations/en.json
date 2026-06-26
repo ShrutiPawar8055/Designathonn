@@ -14,7 +14,43 @@
     "subtitle": "Every place remembers.",
     "description": "An AI-powered cinematic storytelling companion. We help you hear the soul of every place you visit.",
     "cta": "Begin Your Journey",
-    "trendingStories": "Trending Stories"
+    "trendingStories": "Trending Stories",
+    "exploreIndia": "Explore India"
+  },
+  "problem": {
+    "quote": "No more unreliable guides.",
+    "quoteItalic": "Just stories.",
+    "promise": "The Reverie Promise"
+  },
+  "exploreByMood": {
+    "title": "Explore by Mood",
+    "subtitle": "What calls to you today?",
+    "viewAll": "View All",
+    "spiritual": "Spiritual",
+    "spiritualDesc": "Find peace in sacred spaces",
+    "mystical": "Mystical",
+    "mysticalDesc": "Unravel myths and mysteries",
+    "historical": "Historical",
+    "historicalDesc": "Walk through civilizations",
+    "coastal": "Coastal",
+    "coastalDesc": "Tales from shores and oceans",
+    "royal": "Royal",
+    "royalDesc": "Legends of kings and empires"
+  },
+  "trendingStories": {
+    "title": "Trending Stories",
+    "subtitle": "Loved by explorers",
+    "duration": "listen"
+  },
+  "howItWorks": {
+    "sectionTitle": "The Journey",
+    "title": "How Reverie works",
+    "step1Title": "Choose a Place",
+    "step1Desc": "Select from our curated list of sacred and historical sites across India.",
+    "step2Title": "Hear Its Story",
+    "step2Desc": "Immerse yourself in cinematic narration and ambient sounds that bring history to life.",
+    "step3Title": "Ask Your Guide",
+    "step3Desc": "Converse with your AI guide to dive deeper into specific myths, facts, or architecture."
   },
   "collections": {
     "title": "Curated Collections",
@@ -52,16 +88,44 @@
       "connectionDesc": "We remember stories that reflect our own experiences or aspirations."
     },
     "featuredStories": "Featured Stories",
-    "backHome": "Back to Home"
+    "backHome": "Back to Home",
+    "magicOfStories": "The Magic of Stories",
+    "listenIn": "Listen in",
+    "tagline": "Every Place Remembers.",
+    "builtWithPassion": "Built with passion for India's heritage. Storytelling that stays with you, long after you've left the place."
   },
   "place": {
     "backToCollections": "Back to Collections",
+    "backToJourneys": "Back to Journeys",
     "beginNarration": "Begin Narration",
     "stopNarration": "Stop Narration",
+    "loading": "Loading...",
     "openingNarration": "Opening Narration",
     "aiGuide": "AI Guide",
     "aiGuidePlaceholder": "Ask the AI Guide anything about this place...",
-    "send": "Send"
+    "send": "Send",
+    "region": "Region",
+    "bestTime": "Best Time",
+    "language": "Language",
+    "significance": "Significance",
+    "theSoulOf": "The Soul of",
+    "whatHappened": "What happened?",
+    "whenHappened": "When did it happen?",
+    "whyPopular": "Why is it popular?",
+    "mythologyOrigin": "Mythology & Origin",
+    "livingHistory": "The Living History",
+    "curatedLegend": "Curated Legend",
+    "sacredTimeline": "Sacred Timeline",
+    "chroniclesOf": "Chronicles of",
+    "reverieGuide": "Reverie Guide",
+    "yourCompanionFor": "Your companion for",
+    "everyStone": "Every stone here has a memory. What would you like to uncover today?",
+    "suggestedEnquiries": "Suggested Enquiries",
+    "bestTimeForAarti": "What is the best time for Aarti?",
+    "bestTimeForDarshan": "What is the best time for Darshan?",
+    "tellMeArchitecture": "Tell me about the architecture",
+    "whereFindPeace": "Where can I find peace?",
+    "voiceNarration": "Voice Narration"
   },
   "footer": {
     "tagline": "Every place remembers.",
@@ -78,5 +142,90 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "copyright": "© 2025 REVERIE. ALL RIGHTS RESERVED."
+  },
+  "reviews": {
+    "voices": "Voices of Explorers",
+    "experience": "The Experience",
+    "basedOn": "Based on",
+    "howWasJourney": "How was your journey?",
+    "yourRating": "Your rating",
+    "shareWhatMesmerizing": "Share what made your journey mesmerizing...",
+    "postReview": "Post Review",
+    "helpful": "helpful",
+    "reply": "Reply"
+  },
+  "aiGuidePreview": {
+    "conversationalAi": "Conversational AI",
+    "askReverieAnything": "Ask Reverie anything",
+    "description": "Your AI guide to history, culture and hidden stories. Converse in your own language, ask about legends, or dive deep into architectural nuances.",
+    "tryAsking": "Try asking:",
+    "suggestion1": "Tell me the legend of this temple",
+    "suggestion2": "Why is this place sacred?",
+    "suggestion3": "What happened here in 1565?",
+    "readyToTellStory": "Ready to tell a story...",
+    "placeholder": "Ask about any place, story or legend..."
+  },
+  "explorePage": {
+    "title": "Explore the Wonders"
+  },
+  "spiritualPage": {
+    "sacredGeography": "Sacred Geography",
+    "title": "Spiritual Journeys",
+    "description": "India's spiritual landscape is a tapestry of ancient temples, sacred rivers, and timeless traditions. Embark on a journey to discover the soul of these divine spaces.",
+    "searchPlaceholder": "Search by place or state...",
+    "noPlaces": "No sacred places found matching your search."
+  },
+  "collectionsPage": {
+    "curatedArchives": "Curated Archives",
+    "title": "Collections",
+    "description": "Discover India's heritage through thematic journeys. Each collection is a curated archive of stories, myths, and historical milestones.",
+    "journeys": "journeys"
+  },
+  "aboutPage": {
+    "aboutReverie": "About Reverie",
+    "tagline": "Where history whispers and stories come alive",
+    "creatorDeveloper": "CREATOR & DEVELOPER",
+    "creatorDesc1": "Built with passion and devotion during",
+    "creatorDesc2": "Reverie is more than just a travel companion—it's a bridge between generations, connecting the past with the present through the magic of storytelling and technology.",
+    "madeWithLove": "Made with love in India",
+    "ourMission": "Our Mission",
+    "missionDesc": "Reverie brings India's heritage alive through immersive, cinematic storytelling. We believe every temple, every ruin, and every city has a soul waiting to be discovered—not just visited.",
+    "whatMakesUsSpecial": "What Makes Us Special",
+    "specialDesc": "We don't just give you facts—we weave together history, mythology, and human emotion into captivating narratives that transport you through time.",
+    "openForCollaboration": "Open for Collaboration!",
+    "collabDesc": "Are you a local guide, historian, storyteller, or heritage enthusiast? We'd love to collaborate with you! Help us uncover more hidden stories, create richer experiences, and make Reverie the most authentic cultural companion for travelers exploring India.",
+    "localGuides": "Local Guides",
+    "localGuidesDesc": "Share your on-the-ground knowledge and insider stories",
+    "historiansScholars": "Historians & Scholars",
+    "historiansScholarsDesc": "Help us ensure historical accuracy and deep cultural context",
+    "storytellersArtists": "Storytellers & Artists",
+    "storytellersArtistsDesc": "Bring the magic of India's stories to life in new ways",
+    "getInTouch": "GET IN TOUCH"
+  },
+  "aiGuidePage": {
+    "storiesWeveShared": "STORIES WE'VE SHARED",
+    "narratorSettings": "NARRATOR SETTINGS",
+    "languageOfStories": "LANGUAGE OF STORIES",
+    "selected": "Selected",
+    "toneOfVoice": "TONE OF VOICE",
+    "wiseStorytelling": "Wise & Storytelling",
+    "scholarlyDetailed": "Scholarly & Detailed",
+    "warmFriendly": "Warm & Friendly",
+    "reverieGuide": "Reverie Guide",
+    "yourStoryteller": "Your storyteller of India's heritage",
+    "readChat": "READ & CHAT",
+    "listen": "LISTEN",
+    "listeningToYourVoice": "Listening to Your Voice...",
+    "listeningDesc": "Speak to me. Ask about a place, a legend, or the hidden meanings behind the ancient stones. I will listen, and I will tell you stories as they were meant to be told.",
+    "stopListening": "STOP LISTENING",
+    "placeholder": "Ask me about a place, a legend, or request a story...",
+    "disclaimer": "REVERIE GUIDE IS HERE TO SHARE CULTURAL AND HISTORICAL STORIES"
+  },
+  "common": {
+    "journeyNotFound": "Journey Not Found",
+    "returnToExplore": "Return to Explore",
+    "exploreJourney": "Explore Journey",
+    "sacredPlaces": "Sacred Places",
+    "viewAllJourneys": "View All Journeys"
   }
 }

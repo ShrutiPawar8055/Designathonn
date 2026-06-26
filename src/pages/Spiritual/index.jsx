@@ -3,10 +3,12 @@ import PageWrapper from '../../components/layout/PageWrapper';
 import { motion } from 'framer-motion';
 import { MapPin, ArrowRight, Filter, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { places } from '../../data/places';
 
 const Spiritual = () => {
+  const { t } = useTranslation();
   const [filter, setFilter] = useState('All');
   const [search, setSearch] = useState('');
 
@@ -22,10 +24,10 @@ const Spiritual = () => {
       <section className="pt-40 pb-20 bg-background-light dark:bg-background-dark">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mb-20">
-            <p className="ui-label text-accent-light dark:text-accent-dark mb-6">SACRED GEOGRAPHY</p>
-            <h1 className="display-h1 mb-8">Spiritual Journeys</h1>
+            <p className="ui-label text-accent-light dark:text-accent-dark mb-6">{t('spiritualPage.sacredGeography')}</p>
+            <h1 className="display-h1 mb-8">{t('spiritualPage.title')}</h1>
             <p className="body-text opacity-70">
-              India's spiritual landscape is a tapestry of ancient temples, sacred rivers, and timeless traditions. Embark on a journey to discover the soul of these divine spaces.
+              {t('spiritualPage.description')}
             </p>
           </div>
 
@@ -51,7 +53,7 @@ const Spiritual = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 opacity-30" size={18} />
               <input 
                 type="text" 
-                placeholder="Search by place or state..." 
+                placeholder={t('spiritualPage.searchPlaceholder')} 
                 className="w-full bg-surface-light dark:bg-surface-dark border border-border/10 rounded-full pl-12 pr-6 py-3 text-sm focus:outline-none focus:border-accent-light"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -101,7 +103,7 @@ const Spiritual = () => {
 
           {filteredPlaces.length === 0 && (
             <div className="py-40 text-center">
-              <p className="body-text opacity-40 italic">No sacred places found matching your search.</p>
+              <p className="body-text opacity-40 italic">{t('spiritualPage.noPlaces')}</p>
             </div>
           )}
         </div>

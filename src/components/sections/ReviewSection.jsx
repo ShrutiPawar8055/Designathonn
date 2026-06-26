@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, MessageSquare, Heart, Share2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const ReviewSection = ({ placeName }) => {
+  const { t } = useTranslation();
   const [reviews, setReviews] = useState([
     {
       id: 1,
@@ -51,8 +53,8 @@ const ReviewSection = ({ placeName }) => {
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
             <div>
-              <p className="ui-label text-accent-light dark:text-accent-dark mb-4 tracking-[0.2em]">VOICES OF EXPLORERS</p>
-              <h2 className="heading-h2">The {placeName} Experience</h2>
+              <p className="ui-label text-accent-light dark:text-accent-dark mb-4 tracking-[0.2em]">{t('reviews.voices')}</p>
+              <h2 className="heading-h2">{t('reviews.experience')} {placeName}</h2>
             </div>
             <div className="flex items-center gap-4 bg-background-light dark:bg-background-dark p-6 rounded-3xl border border-border/10 shadow-sm">
               <div className="text-center border-r border-border/10 pr-6">
@@ -62,7 +64,7 @@ const ReviewSection = ({ placeName }) => {
                 </div>
               </div>
               <div className="pl-2">
-                <p className="ui-label text-[10px] opacity-40">BASED ON</p>
+                <p className="ui-label text-[10px] opacity-40">{t('reviews.basedOn')}</p>
                 <p className="text-xs font-bold">1.2k Reviews</p>
               </div>
             </div>
@@ -70,10 +72,10 @@ const ReviewSection = ({ placeName }) => {
 
           {/* Add Review Form */}
           <div className="mb-20 bg-background-light dark:bg-background-dark p-8 md:p-12 rounded-[2.5rem] border border-border/10 shadow-xl">
-            <h3 className="heading-h3 text-xl mb-6">How was your journey?</h3>
+            <h3 className="heading-h3 text-xl mb-6">{t('reviews.howWasJourney')}</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="flex items-center gap-4 mb-4">
-                <p className="ui-label text-[10px] opacity-40">YOUR RATING:</p>
+                <p className="ui-label text-[10px] opacity-40">{t('reviews.yourRating')}:</p>
                 <div className="flex gap-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button 
@@ -91,13 +93,13 @@ const ReviewSection = ({ placeName }) => {
                 <textarea 
                   value={newReview}
                   onChange={(e) => setNewReview(e.target.value)}
-                  placeholder="Share what made your journey mesmerizing..." 
+                  placeholder={t('reviews.shareWhatMesmerizing')} 
                   className="w-full bg-surface-light dark:bg-surface-dark border border-border/10 rounded-3xl px-8 py-6 text-sm focus:outline-none focus:border-accent-light transition-all min-h-[150px] resize-none"
                 />
               </div>
               <div className="flex justify-end">
                 <button type="submit" className="px-10 py-4 bg-heritage-light dark:bg-heritage-dark text-white rounded-full ui-label text-xs tracking-widest shadow-lg hover:scale-105 transition-all">
-                  POST REVIEW
+                  {t('reviews.postReview')}
                 </button>
               </div>
             </form>
@@ -140,11 +142,11 @@ const ReviewSection = ({ placeName }) => {
                   <div className="flex items-center gap-6">
                     <button className="flex items-center gap-2 text-[10px] ui-label opacity-40 hover:opacity-100 hover:text-heritage-light transition-all">
                       <Heart size={14} />
-                      <span>{review.likes} HELPFUL</span>
+                      <span>{review.likes} {t('reviews.helpful')}</span>
                     </button>
                     <button className="flex items-center gap-2 text-[10px] ui-label opacity-40 hover:opacity-100 hover:text-accent-light transition-all">
                       <MessageSquare size={14} />
-                      <span>REPLY</span>
+                      <span>{t('reviews.reply')}</span>
                     </button>
                   </div>
                 </div>

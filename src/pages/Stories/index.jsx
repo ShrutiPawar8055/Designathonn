@@ -18,7 +18,7 @@ const Stories = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-24"
           >
-            <p className="ui-label text-accent-light dark:text-accent-dark mb-6 tracking-[0.2em]">THE MAGIC OF STORIES</p>
+            <p className="ui-label text-accent-light dark:text-accent-dark mb-6 tracking-[0.2em]">{t('storiesPage.magicOfStories')}</p>
             <h1 className="display-h1 mb-8">{t('storiesPage.title')}</h1>
             <p className="body-text text-xl opacity-80 max-w-3xl mx-auto">
               {t('storiesPage.description')}
@@ -95,7 +95,7 @@ const Stories = () => {
                       <p className="ui-label text-[10px] text-accent-light dark:text-accent-dark mb-3">{place.state} • {place.category}</p>
                       <h3 className="heading-h3 text-3xl mb-4 group-hover:text-heritage-light dark:group-hover:text-heritage-dark transition-colors">{place.name}</h3>
                       <p className="body-text opacity-70 mb-6">{place.shortDesc}</p>
-                      <p className="ui-label text-[10px] opacity-40">Listen in {place.audioGuide.duration}</p>
+                      <p className="ui-label text-[10px] opacity-40">{t('storiesPage.listenIn')} {place.audioGuide.duration}</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -113,9 +113,9 @@ const Stories = () => {
             <div className="mb-6">
               <span className="font-heading text-5xl tracking-[0.2em] font-black text-heritage-light dark:text-heritage-dark">REVERIE</span>
             </div>
-            <p className="ui-label text-[12px] opacity-60 mb-4">EVERY PLACE REMEMBERS</p>
+            <p className="ui-label text-[12px] opacity-60 mb-4">{t('storiesPage.tagline')}</p>
             <p className="body-text text-sm opacity-70 max-w-xl mx-auto">
-              Built with passion for India's heritage. Storytelling that stays with you, long after you've left the place.
+              {t('storiesPage.builtWithPassion')}
             </p>
           </motion.div>
         </div>

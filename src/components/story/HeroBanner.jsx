@@ -3,8 +3,10 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import indiaImg from '../../assets/ui/india2.png';
+import { useTranslation } from 'react-i18next';
 
 const HeroBanner = () => {
+  const { t } = useTranslation();
   return (
     <section className="relative h-screen w-full overflow-hidden">
       {/* Background Image with Parallax */}
@@ -31,7 +33,7 @@ const HeroBanner = () => {
         >
           <Link to="/collections" className="group relative px-10 py-5 bg-white/15 backdrop-blur-xl text-white font-bold rounded-full overflow-hidden transition-all hover:bg-white hover:text-black hover:pr-14 border border-white/30 shadow-2xl">
             <span className="relative z-10 flex items-center space-x-3">
-              <span className="tracking-widest">EXPLORE INDIA</span>
+              <span className="tracking-widest">{t('hero.exploreIndia')}</span>
               <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
             </span>
           </Link>

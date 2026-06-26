@@ -9,23 +9,31 @@ const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState('en');
+  const [i18nInitialized, setI18nInitialized] = useState(false);
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language');
-    if (savedLanguage) {
+    // Initialize i18n after the component mounts (so that window/localStorage are available)
+    const initI18n = async () => {
+      const savedLanguage = localStorage.getItem('language') || 'en';
       setLanguage(savedLanguage);
-    }
 
-    i18n.use(initReactI18next).init({
-      resources: {
-        en: { translation: enTranslations },
-        hi: { translation: hiTranslations },
-        mr: { translation: mrTranslations },
-      },
-      lng: savedLanguage || 'en',
-      fallbackLng: "en",
-      interpolation: { escapeValue: false }
-    });
+      await i18n
+        .use(initReactI18next)
+        .init({
+          resources: {
+            en: { translation: enTranslations },
+            hi: { translation: hiTranslations },
+            mr: { translation: mrTranslations },
+          },
+          lng: savedLanguage,
+          fallbackLng: "en",
+          interpolation: { escapeValue: false }
+        });
+      
+      setI18nInitialized(true);
+    };
+
+    initI18n();
   }, []);
 
   const changeLanguage = (lng) => {
@@ -33,6 +41,11 @@ export const LanguageProvider = ({ children }) => {
     i18n.changeLanguage(lng);
     localStorage.setItem('language', lng);
   };
+
+  // Don't render children until i18n is initialized!
+  if (!i18nInitialized) {
+    return null; // Or a loading spinner if you want!
+  }
 
   return (
     <LanguageContext.Provider value={{ language, changeLanguage }}>

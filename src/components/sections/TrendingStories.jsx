@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import { BookOpen, Clock, ChevronRight, ChevronLeft } from 'lucide-react';
 import { places } from '../../data/places';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
-const StoryCard = ({ story, index }) => (
+const StoryCard = ({ story, index }) => {
+  const { t } = useTranslation();
+  return (
   <motion.div
     initial={{ opacity: 0, x: 20 }}
     whileInView={{ opacity: 1, x: 0 }}
@@ -32,15 +35,16 @@ const StoryCard = ({ story, index }) => (
         <div className="flex items-center space-x-4 text-muted-light dark:text-muted-dark">
           <div className="flex items-center space-x-1">
             <Clock size={14} />
-            <span className="ui-label text-[8px]">{story.audioGuide.duration} listen</span>
+            <span className="ui-label text-[8px]">{story.audioGuide.duration} {t('trendingStories.duration')}</span>
           </div>
         </div>
       </div>
     </Link>
   </motion.div>
-);
+);}
 
 const TrendingStories = () => {
+  const { t } = useTranslation();
   const trendingStories = places.slice(0, 3);
   
   return (
@@ -48,8 +52,8 @@ const TrendingStories = () => {
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-end mb-16">
           <div>
-            <p className="ui-label text-accent-light dark:text-accent-dark mb-4">TRENDING STORIES</p>
-            <h2 className="heading-h2">Loved by explorers</h2>
+            <p className="ui-label text-accent-light dark:text-accent-dark mb-4">{t('trendingStories.title')}</p>
+            <h2 className="heading-h2">{t('trendingStories.subtitle')}</h2>
           </div>
           <div className="flex space-x-4">
             <button className="w-12 h-12 rounded-full border border-border/10 flex items-center justify-center hover:bg-black/5 dark:hover:bg-white/5 transition-colors">

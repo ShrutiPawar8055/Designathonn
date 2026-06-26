@@ -3,8 +3,10 @@ import PageWrapper from '../components/layout/PageWrapper';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, Send, Sparkles, Volume2, User, Bot, History, Settings, Info, ArrowLeft, MoreVertical, Globe, Play, Pause, Loader2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useTranslation } from 'react-i18next';
 
 const AIGuide = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('chat'); // 'chat' or 'voice'
   const [messages, setMessages] = useState([
     {
